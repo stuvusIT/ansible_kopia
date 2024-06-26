@@ -1,0 +1,22 @@
+kopia_api_server_url: https://localhost:51515
+kopia_backup_schedule: "*-*-* 4:00:00"
+kopia_repository_config:
+  apiServer:
+    url: "{{kopia_api_server_url}}"
+    serverCertFingerprint: ""
+  caching:
+    cacheDirectory: /var/lib/cache/kopia
+    maxCacheSize: 5242880000
+    maxMetadataCacheSize: 5242880000
+    maxListCacheDuration: 30
+  hostname: "{{ansible_hostname}}"
+  username: root
+  description: "API Server: {{kopia_api_server_url}}"
+  enableActions: false
+  formatBlobCacheDuration: 900000000000
+kopia_ignore_patterns:
+  - /media/*
+  - /var/cache/*
+  - /tmp/*
+  - /var/tmp/*
+  - /mnt/*

@@ -1,2 +1,48 @@
----
+- name: Install Kopia signing key
+  apt_key:
+     url: https://kopia.io/signing-key
+     state: present
 
+- name: Add APT repository for Kopia
+  apt_repository:
+    repo: deb http://packages.kopia.io/apt stable main
+
+- name: Install Kopia
+  apt:
+    name: kopia
+    state: present
+    update_cache: yes
+
+- name: Create Kopia Config Directorx
+  file:
+    path: /etc/kopia
+    state: directory
+
+- name: Place Repository Config
+  template:
+    src: repository.config.j2
+    dest: /etc/kopia/repository.config
+    mode: 0400
+
+- name: Place Kopia Repository Password
+  template:
+    src: repository.config.kopia-password.j2
+    dest: /etc/kopia/repository.config.kopia-password
+    mode: 0400
+
+- name: Place .kopiaignore
+  template:
+    src: .kopiaignore.j2
+    dest: /etc/kopia/.kopiaignore
+
+- name: Place kopia service definition
+  copy:
+    src: kopia.service
+    dest: /etc/systemd/system/kopia.service
+  notify: Reload systemd
+
+- name: Place kopia timer definition
+  template:
+    src: kopia.timer.j2
+    dest: /etc/systemd/system/kopia.timer
+  notify: Reload systemd

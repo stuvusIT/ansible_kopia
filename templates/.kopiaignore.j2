@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for pattern in kopia_ignore_patterns %}
+{{ pattern }}
+{% endfor %}

@@ -1,0 +1,9 @@
+[Unit]
+Description=Starts nightly backup
+
+[Timer]
+OnCalendar={{ kopia_backup_schedule }}
+Unit=kopia.service
+
+[Install]
+WantedBy=multi-user.target
