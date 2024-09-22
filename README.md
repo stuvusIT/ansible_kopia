@@ -1,34 +1,41 @@
-# Role Name
+# Kopia
 
-A brief description of the role goes here.
+This role installs [kopia](https://kopia.io/) and configures it for backups.
+It was developed and tested with Debain, but it might work with other Debian based distributions.
 
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here.
-For instance, if the role uses the EC2 module or depends on other Ansible roles, it may be a good idea to mention in this section that the boto package is required.
+The role doesn't initialize the repository for backups, you need to provide the correct configuration for an existing backup repository.
+The default `kopia_repository_config` assumes a setup, where backups are proxied over a [repostory server](https://kopia.io/docs/repository-server/).
+If you need a different kind of repository, you will need to adjust the config accordingly.
+Creation of appropriate user accounts on the repository server is also beyond the scope of this role.
+
+Additionally, the provided `kopia_ignore_patterns` are placed in `/etc/kopia/.kopiaignore`.
+Your global policy (or a local one, if you want to configure this on a per-host basis) needs to include that in the dot-ignore list.
 
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role.
-Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Don't forget to indent the markdown table so it is readable even if not rendered.
-
-| Name       | Required/Default         | Description                                                                                        |
-|------------|:------------------------:|----------------------------------------------------------------------------------------------------|
-| `example1` | :heavy_check_mark:       | Lorem ipsum dolor sit amet, consetetur sadipscing elitr,                                           |
-| `example2` | :heavy_multiplication_x: | Sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. |
-| `example3` | `True`                   | Stet clita kasd gubergren                                                                          |
-| `example4` | `5`                      | No sea takimata sanctus est Lorem ipsum dolor sit amet.                                            |
-
+| Name                        |               Required/Default                | Description                                                          |
+| --------------------------- | :-------------------------------------------: | -------------------------------------------------------------------- |
+| `kopia_api_server_url`      |           `http://localhost:51515`            | URL of the repository server to use. Not used, if config is replaced |
+| `kopia_repository_password` |              :heavy_check_mark:               | Password for the repository.                                          |
+| `kopia_backup_schedule`     |                `*-*-* 4:00:00`                | `OnCalendar` expression for the systemd timer triggering snapshots.  |
+| `kopia_repository_config`   | See [defaults/main.yml](./defaults/main.yml). | Kopia repository config.                                             |
+| `kopia_ignore_patterns`     | See [defaults/main.yml](./defaults/main.yml). | Patterns to ignore while taking snapshot.                            |
 
 ## Example
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The following example playbook assumes that you cloned this role to `roles/kopia` (i.e. the name of the role is `kopia` instead of `ansible_kopia`).
 
 ```yml
+- hosts: example01
+  roles:
+    - role: kopia
+        kopia_repository_password: secret
+        kopia_api_server_url: https://backup.example.com
 ```
 
 
@@ -39,4 +46,4 @@ This work is licensed under the [MIT License](./LICENSE).
 
 ## Author Information
 
-- [Author Name (nickname)](github profile) _givenname.familyname at stuvus.uni-stuttgart.de_
+- [Sven Feyerabend (SF2311)](https://github.com/SF2311) Sven.Feyerabend at stuvus.uni-stuttgart.de_
