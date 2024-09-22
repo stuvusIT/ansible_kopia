@@ -21,7 +21,7 @@ Your global policy (or a local one, if you want to configure this on a per-host 
 | Name                        |               Required/Default                | Description                                                          |
 | --------------------------- | :-------------------------------------------: | -------------------------------------------------------------------- |
 | `kopia_api_server_url`      |           `http://localhost:51515`            | URL of the repository server to use. Not used, if config is replaced |
-| `kopia_repository_password` |              :heavy_check_mark:               | Pasword for the repository.                                          |
+| `kopia_repository_password` |              :heavy_check_mark:               | Password for the repository.                                          |
 | `kopia_backup_schedule`     |                `*-*-* 4:00:00`                | `OnCalendar` expression for the systemd timer triggering snapshots.  |
 | `kopia_repository_config`   | See [defaults/main.yml](./defaults/main.yml). | Kopia repository config.                                             |
 | `kopia_ignore_patterns`     | See [defaults/main.yml](./defaults/main.yml). | Patterns to ignore while taking snapshot.                            |
