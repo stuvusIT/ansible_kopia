@@ -7,7 +7,7 @@ It was developed and tested with Debain, but it might work with other Debian bas
 ## Requirements
 
 The role doesn't initialize the repository for backups, you need to provide the correct configuration for an existing backup repository.
-The default `kopia_repositiory_config` assumes a setup, where backups are proxied over a [repostory server](https://kopia.io/docs/repository-server/).
+The default `kopia_repository_config` assumes a setup, where backups are proxied over a [repostory server](https://kopia.io/docs/repository-server/).
 If you need a different kind of repository, you will need to adjust the config accordingly.
 Creation of appropriate user accounts on the repository server is also beyond the scope of this role.
 
