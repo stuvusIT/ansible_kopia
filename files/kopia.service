@@ -4,7 +4,7 @@ Description=Take a backup of the system
 [Service]
 Type=simple
 User=root
-ExecStart=/ust/bin/kopia snapshot create /
+ExecStart=/usr/bin/kopia snapshot create /
 
 [Install]
 WantedBy=multi-user.target
