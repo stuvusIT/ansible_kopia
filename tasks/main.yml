@@ -13,7 +13,7 @@
     state: present
     update_cache: yes
 
-- name: Create Kopia Config Directorx
+- name: Create Kopia Config Directory
   file:
     path: /etc/kopia
     state: directory
